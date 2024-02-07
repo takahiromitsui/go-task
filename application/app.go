@@ -5,10 +5,12 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+
 	// "os"
 	"time"
 
 	_ "github.com/lib/pq"
+	"github.com/takahiromitsui/go-task-manager/util"
 )
 
 
@@ -37,6 +39,10 @@ func connectToDB() *sql.DB {
 
 	return db
 
+}
+
+func init() {
+	util.LoadEnv()
 }
 
 func NewApp() *App {
