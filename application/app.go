@@ -2,7 +2,6 @@ package application
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"net/http"
 
@@ -11,43 +10,23 @@ import (
 
 	_ "github.com/lib/pq"
 	"github.com/takahiromitsui/go-task-manager/util"
+	"gorm.io/gorm"
 )
 
 
 type App struct {
 	router http.Handler
-	db 	 *sql.DB
-}
-
-func connectToDB() *sql.DB {
-	host := "localhost"
-	port := 5432
-	user := "postgres"
-	password := "password"
-	dbname := "go_task"
-
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-	"password=%s dbname=%s sslmode=disable",
-	host, port, user, password, dbname)
-
-
-	db, err := sql.Open("postgres", psqlInfo)
-
-	if err != nil {
-		fmt.Printf("Error connecting to the database: %v\n", err)
-	}
-
-	return db
-
+	db 	 *gorm.DB
 }
 
 func init() {
 	util.LoadEnv()
+	util.ConnectToDB()
 }
 
 func NewApp() *App {
 	app:= &App{
-		db: connectToDB(),
+		db: util.DB,
 	}
 	app.loadRoutes()
 	return app
@@ -59,15 +38,15 @@ func (app *App) Start(ctx context.Context) error {
 		Handler: app.router,
 	}
 
-	err:= app.db.Ping()
-	if err != nil {
-		return fmt.Errorf("failed to ping the database: %v", err)
-	}
+	// err:= app.db.Ping()
+	// if err != nil {
+	// 	return fmt.Errorf("failed to ping the database: %v", err)
+	// }
 
 	defer func() {
-		if err := app.db.Close(); err != nil {
-			fmt.Printf("Error closing the database: %v\n", err)
-		}
+		// if err := app.db.Close(); err != nil {
+		// 	fmt.Printf("Error closing the database: %v\n", err)
+		// }
 	}()
 	fmt.Println("Server is running on port 8080")
 	ch := make(chan error, 1)
