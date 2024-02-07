@@ -21,7 +21,7 @@ func(app *App) loadRoutes() {
 
 func (app *App) loadTaskRoutes(router chi.Router) {
 	taskController := &controller.Task{
-		Repository: &task.PostgresRepository{
+		Repository: &task.GormRepository{
 			DB: app.db,
 		},
 	}

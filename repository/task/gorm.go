@@ -8,11 +8,11 @@ import (
 	"gorm.io/gorm"
 )
 
-type PostgresRepository struct {
+type GormRepository struct {
 	DB *gorm.DB
 }
 
-func (r *PostgresRepository) Insert(ctx context.Context, task model.Task) error {
+func (r *GormRepository) Insert(ctx context.Context, task model.Task) error {
 	result := r.DB.WithContext(ctx).Create(&task)
 	if result.Error != nil {
 		return fmt.Errorf("error inserting task: %v", result.Error)

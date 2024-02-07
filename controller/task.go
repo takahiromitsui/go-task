@@ -10,7 +10,7 @@ import (
 )
 
 type Task struct {
-	Repository *task.PostgresRepository
+	Repository *task.GormRepository
 }
 
 func (t *Task) Create(w http.ResponseWriter, r *http.Request) {
