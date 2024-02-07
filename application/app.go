@@ -38,16 +38,6 @@ func (app *App) Start(ctx context.Context) error {
 		Handler: app.router,
 	}
 
-	// err:= app.db.Ping()
-	// if err != nil {
-	// 	return fmt.Errorf("failed to ping the database: %v", err)
-	// }
-
-	defer func() {
-		// if err := app.db.Close(); err != nil {
-		// 	fmt.Printf("Error closing the database: %v\n", err)
-		// }
-	}()
 	fmt.Println("Server is running on port 8080")
 	ch := make(chan error, 1)
 

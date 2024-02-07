@@ -1,13 +1,12 @@
 package model
 
-import "github.com/google/uuid"
-
+import (
+	"gorm.io/gorm"
+)
 
 type Task struct {
-	ID uuid.UUID `json:"id"`
-	Title string `json:"title"`
-	Description string `json:"description"`
-	IsDone bool `json:"is_done"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	gorm.Model
+	Title       string 
+	Description string 
+	IsDone      bool  
 }
